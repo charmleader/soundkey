@@ -1,0 +1,167 @@
+<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>참리더 기타 조율기 · Soundkey v1.2</title><style>
+:root{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",system-ui,sans-serif;color:#283b32;background:#f6f7f2;color-scheme:light;--green:#527c3c;--muted:#778078;--line:#e2e6dd}*{box-sizing:border-box}body{margin:0;padding:36px 24px 24px}main{max-width:980px;margin:auto}button,a{-webkit-tap-highlight-color:transparent}button{font:inherit;cursor:pointer}button:focus-visible,a:focus-visible,summary:focus-visible{outline:3px solid #527c3c;outline-offset:4px}a{color:var(--green)}header{display:flex;align-items:center;justify-content:space-between;gap:12px;margin:0 0 26px}.brand{font-size:11px;letter-spacing:3px;color:var(--green);font-weight:700}h1{font-size:27px;letter-spacing:-1px;margin:6px 0 0;font-weight:650}.version{font-size:12px;color:var(--muted);line-height:1.8;text-align:right}h2{font-size:18px;letter-spacing:-.5px;margin:0}.intro{font-size:13px;color:var(--muted);margin:8px 0 0;line-height:1.7}.workspace{display:grid;grid-template-columns:1.12fr 1fr;gap:20px;align-items:start}.panel,.guitar-section{background:#fff;border:1px solid var(--line);border-radius:24px;padding:28px 24px;min-width:0;box-shadow:0 6px 24px #34402a04}.target{font-size:14px;font-weight:600;color:var(--green);text-align:center;background:#f1f5ed;border-radius:10px;padding:11px;line-height:1.6}.view-switch{display:flex;justify-content:center;gap:6px;margin-top:18px}.view-switch button{border:0;padding:7px 14px;border-radius:99px;color:#7b847b;background:transparent;font-size:12px}.view-switch button[aria-pressed=true]{background:#edf2e8;color:var(--green);font-weight:650}.fan-wrap{position:relative;margin:12px -6px 0;text-align:center}.fan{display:block;width:100%;overflow:visible}.fan-segment{fill:#e0e5dc;transition:fill .12s}.fan-segment.active{fill:#bd935f}.fan-segment.active.tuned{fill:#70a64c}.fan text{font:12px system-ui;fill:#8c968b}.fan .symbol{font:30px Georgia,serif;fill:#9ca497}.fan-needle{fill:#af7837;opacity:0;transition:transform .12s}.reading{position:absolute;left:10%;right:10%;top:46%;pointer-events:none}.note{font-size:54px;line-height:1.1;font-weight:650;letter-spacing:-2px;color:#33462f}.note sub{font-size:21px;letter-spacing:0}.frequency{font-size:11px;color:#7c877b;margin-top:9px;font-variant-numeric:tabular-nums;line-height:1.6}.direction-labels{display:flex;justify-content:space-between;color:#7b8678;font-size:12px;margin:-10px 8px 18px}.direction-labels strong{font-weight:600;color:#52654a}.scale{position:relative;height:62px;margin:24px 0 10px;background:repeating-linear-gradient(90deg,transparent 0,transparent calc(10% - 1px),#c7d1c0 calc(10% - 1px),#c7d1c0 10%);background-size:100% 20px;background-repeat:no-repeat;background-position:center}.needle{position:absolute;left:50%;top:6px;width:3px;height:33px;transform:translateX(-50%);background:#af7837;transition:left .12s}.labels{display:flex;justify-content:space-between;font-size:11px;color:#7b8678;padding-top:44px}body[data-view=fan] .scale{display:none}body[data-view=linear] .fan{visibility:hidden}body[data-view=linear] .fan-wrap{max-height:145px;overflow:hidden}body[data-view=linear] .reading{top:15px}.instruction{text-align:center;background:#f7f8f4;border-radius:14px;padding:16px 12px;min-height:94px}.status{font-size:15px;font-weight:600;line-height:1.6}.cents{font-size:12px;color:#7c877b;margin-top:7px;font-variant-numeric:tabular-nums}.status.good{color:#527c3c}.status.error{color:#ae4c36}#toggle{display:block;width:100%;border:0;border-radius:13px;background:#608b45;color:white;padding:15px 12px;font-weight:650;font-size:16px;margin-top:18px;box-shadow:0 3px 0 #3c6124}#toggle:hover{background:#527b3a}.hint{text-align:center;font-size:12px;color:#87917f;line-height:1.8;margin:15px 0 0}.guitar-section{text-align:center}.headstock{position:relative;aspect-ratio:400/370;width:100%;max-width:360px;margin:10px auto 0}.headstock svg{width:100%;height:100%;display:block}.head-wire .wire{stroke:#d8d2b7;stroke-linecap:round;fill:none}.head-wire .post-ring{stroke:#d1d5ce;stroke-width:3;fill:url(#metal)}.head-wire .post-core{fill:#626a65;stroke:#e5e7df;stroke-width:2}.head-wire.selected .wire{stroke:#a4d275;filter:drop-shadow(0 0 2px #8eba59)}.head-wire.selected .peg-handle{fill:#d7e8c7;stroke:#78a358;stroke-width:2}.head-wire.selected .post-ring{stroke:#a8d576;stroke-width:5}.string{position:absolute;width:22%;height:50px;border:1px solid #dce3d4;border-radius:12px;background:#fff;color:#64745c;display:flex;align-items:center;justify-content:center;gap:6px;box-shadow:0 3px 8px #283b3205}.string strong{font-size:24px;font-weight:600;line-height:1}.string span{font-size:11px;line-height:1.6}.string[aria-pressed=true]{background:#edf5e4;border:2px solid #78a358;color:#476f30;box-shadow:0 0 0 4px #78a35812}.string:hover{border-color:#78a358}.string.left{left:0}.string.right{right:0}.string.top{top:19%}.string.middle{top:38%}.string.bottom{top:57%}.headstock-caption{font-size:11px;color:#8b9387;margin:0 0 14px;line-height:1.7}.selected-instruction{font-size:13px;line-height:1.8;text-align:left;color:#52654a;background:#f0f4eb;border-radius:12px;padding:12px 14px;margin:0}.steps{margin:18px 0 0;padding:0;list-style:none;display:grid;gap:11px;text-align:left;font-size:12px;color:#7b8678;line-height:1.7}.steps li{display:flex;gap:9px}.steps b{display:inline-grid;place-items:center;flex-shrink:0;border:1px solid #e0e6d9;border-radius:50%;width:22px;height:22px;font-size:11px;font-weight:500;color:#719058}.help{border-top:1px solid var(--line);margin-top:18px;padding-top:14px;font-size:12px;color:#7b8678;line-height:1.9;text-align:left}summary{cursor:pointer}.guide{padding-left:20px;margin-bottom:0}.footer{max-width:680px;margin:24px auto 0;text-align:center;font-size:12px;color:#90988c;line-height:1.9}.footer .creator{color:#65765b;margin:0 0 10px}.footer strong{color:#527c3c}.footer a{text-underline-offset:3px}.privacy{font-size:11px;margin:12px 0}.mic-help{margin-top:14px;text-align:left}footer[hidden]{display:none}@media(max-width:730px){body{padding:24px 16px}.workspace{grid-template-columns:1fr;gap:18px}main{max-width:470px}header{margin-bottom:20px}h1{font-size:25px}.panel,.guitar-section{padding:24px 20px}.headstock{max-width:350px}.fan-wrap{max-width:360px;margin:10px auto 0}.guitar-section{padding-top:22px}.reading{top:46%}.note{font-size:54px}}@media(max-width:360px){body{padding:20px 12px}.panel,.guitar-section{padding:22px 15px}.note{font-size:46px}.frequency{font-size:10px}.string{height:43px}.string strong{font-size:22px}.target{font-size:12px}.status{font-size:14px}.version{font-size:11px}.headstock-caption{font-size:10px}}
+</style></head>
+<body data-view="fan"><main><header><div><span class="brand">SOUNDKEY</span><h1>기타 조율기</h1></div><div class="version">버전 1.2<br>제작자 <strong>참리더</strong></div></header>
+<div class="workspace"><section class="panel" aria-label="기타 조율기"><div id="target" class="target">6번 줄 · E2 (미) · 목표 82.41 Hz</div>
+<div class="view-switch" role="group" aria-label="음정 표시 모양"><button type="button" data-view="fan" aria-pressed="true">부채꼴 보기</button><button type="button" data-view="linear" aria-pressed="false">직선 보기</button></div>
+<div class="fan-wrap"><svg class="fan" viewBox="0 0 320 214" aria-hidden="true"><path data-segment="0" class="fan-segment" d="M 22.02 165.59 A 138 138 0 0 1 25.45 137.32 L 66.40 146.66 A 96 96 0 0 0 64.01 166.32 Z"/>
+<path data-segment="1" class="fan-segment" d="M 26.61 132.64 A 138 138 0 0 1 36.71 106.01 L 74.23 124.88 A 96 96 0 0 0 67.20 143.40 Z"/>
+<path data-segment="2" class="fan-segment" d="M 38.94 101.75 A 138 138 0 0 1 55.12 78.31 L 87.04 105.60 A 96 96 0 0 0 75.79 121.91 Z"/>
+<path data-segment="3" class="fan-segment" d="M 58.32 74.70 A 138 138 0 0 1 79.64 55.81 L 104.10 89.96 A 96 96 0 0 0 89.26 103.10 Z"/>
+<path data-segment="4" class="fan-segment" d="M 83.60 53.08 A 138 138 0 0 1 108.82 39.84 L 124.40 78.85 A 96 96 0 0 0 106.85 88.05 Z"/>
+<path data-segment="5" class="fan-segment" d="M 113.32 38.13 A 138 138 0 0 1 140.98 31.32 L 146.77 72.92 A 96 96 0 0 0 127.53 77.66 Z"/>
+<path data-segment="6" class="fan-segment" d="M 145.76 30.74 A 138 138 0 0 1 174.24 30.74 L 169.91 72.51 A 96 96 0 0 0 150.09 72.51 Z"/>
+<path data-segment="7" class="fan-segment" d="M 179.02 31.32 A 138 138 0 0 1 206.68 38.13 L 192.47 77.66 A 96 96 0 0 0 173.23 72.92 Z"/>
+<path data-segment="8" class="fan-segment" d="M 211.18 39.84 A 138 138 0 0 1 236.40 53.08 L 213.15 88.05 A 96 96 0 0 0 195.60 78.85 Z"/>
+<path data-segment="9" class="fan-segment" d="M 240.36 55.81 A 138 138 0 0 1 261.68 74.70 L 230.74 103.10 A 96 96 0 0 0 215.90 89.96 Z"/>
+<path data-segment="10" class="fan-segment" d="M 264.88 78.31 A 138 138 0 0 1 281.06 101.75 L 244.21 121.91 A 96 96 0 0 0 232.96 105.60 Z"/>
+<path data-segment="11" class="fan-segment" d="M 283.29 106.01 A 138 138 0 0 1 293.39 132.64 L 252.80 143.40 A 96 96 0 0 0 245.77 124.88 Z"/>
+<path data-segment="12" class="fan-segment" d="M 294.55 137.32 A 138 138 0 0 1 297.98 165.59 L 255.99 166.32 A 96 96 0 0 0 253.60 146.66 Z"/>
+<text class="symbol" x="8" y="188">♭</text><text class="symbol" x="295" y="188">♯</text><text x="160" y="16" text-anchor="middle">정확</text><path id="fanNeedle" class="fan-needle" d="M155 86 L165 86 L160 77 Z"/></svg>
+<div class="reading"><div id="note" class="note">—</div><div id="frequency" class="frequency">기준음 A4 = 440 Hz</div></div></div>
+<div class="scale" aria-hidden="true"><div id="needle" class="needle"></div><div class="labels"><span>−50</span><span>0</span><span>+50 센트</span></div></div>
+<div class="direction-labels"><span>낮은 음 · <strong>조이기</strong></span><span>높은 음 · <strong>풀기</strong></span></div>
+<div class="instruction"><div id="status" class="status" role="status" aria-live="polite">마이크를 켜고 시작하세요</div><div id="cents" class="cents">맞출 줄을 고르고, 한 줄씩 튕겨주세요</div></div>
+<button id="toggle" type="button">마이크 켜기</button><p class="hint">가운데 초록 칸에 들어오면 음정이 맞아요.<br>조금씩 조절한 뒤 다시 줄을 튕겨 확인하세요.</p></section>
+<section class="guitar-section" aria-labelledby="strings-heading"><h2 id="strings-heading">맞출 줄을 선택하세요</h2><p class="intro">E · A · D · G · B · E 표준 조율<br>음 이름을 누르면 연결된 줄감개가 표시됩니다.</p><div class="headstock" role="group" aria-label="기타 앞면 줄감개 선택, 왼쪽 아래 6번부터 위로 5번 4번, 오른쪽 위 3번부터 아래로 2번 1번"><svg viewBox="0 0 400 370" aria-hidden="true"><defs>
+<linearGradient id="wood" x1="0" y1="0" x2="1" y2="0"><stop stop-color="#6b3d24"/><stop offset=".25" stop-color="#9d6743"/><stop offset=".5" stop-color="#b47b4c"/><stop offset=".75" stop-color="#95603c"/><stop offset="1" stop-color="#593a27"/></linearGradient>
+<linearGradient id="metal" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#f6f7ee"/><stop offset=".45" stop-color="#b5bcb3"/><stop offset=".6" stop-color="#eff1e9"/><stop offset="1" stop-color="#90998f"/></linearGradient>
+<clipPath id="headClip"><path d="M166 348 L161 310 L133 89 Q124 46 155 42 Q170 46 181 34 Q200 20 219 34 Q230 46 245 42 Q276 46 267 89 L239 310 L234 348Z"/></clipPath></defs>
+<path d="M166 348 L161 310 L133 89 Q124 46 155 42 Q170 46 181 34 Q200 20 219 34 Q230 46 245 42 Q276 46 267 89 L239 310 L234 348Z" fill="url(#wood)" stroke="#cea97c" stroke-width="3"/>
+<g clip-path="url(#headClip)" fill="none" stroke="#3c211b" stroke-opacity=".16" stroke-width="1"><path d="M148 24Q175 130 166 350 M157 24Q184 140 174 350 M168 24Q193 160 183 350 M180 24Q202 130 192 350 M192 24Q210 150 201 350 M204 24Q219 160 211 350 M216 24Q229 150 221 350 M228 24Q240 160 230 350 M240 24Q253 150 239 350"/></g>
+<path d="M165 337H235" stroke="#f0e9ca" stroke-width="10"/>
+<text x="200" y="72" fill="#f1e0bd" text-anchor="middle" style="font:9px Georgia,serif;letter-spacing:2px">SOUNDKEY</text>
+<path d="M195 88l5-5 5 5-5 5Z" fill="#e9ce9e"/>
+<g class="head-wire selected" data-peg="6"><ellipse class="peg-handle" cx="112" cy="237" rx="11" ry="16" fill="url(#metal)" stroke="#b9c1b4" stroke-width="1.5"/><path d="M112 237H147" stroke="#b8beb5" stroke-width="7"/><path class="wire" d="M177 356 L177 337 L147 237" stroke-width="3.3"/><circle class="post-ring" cx="147" cy="237" r="11"/><circle class="post-core" cx="147" cy="237" r="5"/><path d="M144 234l6 6" stroke="#eef0e5" stroke-width="2"/></g>
+<g class="head-wire" data-peg="5"><ellipse class="peg-handle" cx="112" cy="167" rx="11" ry="16" fill="url(#metal)" stroke="#b9c1b4" stroke-width="1.5"/><path d="M112 167H143" stroke="#b8beb5" stroke-width="7"/><path class="wire" d="M186 356 L186 337 L143 167" stroke-width="2.8"/><circle class="post-ring" cx="143" cy="167" r="11"/><circle class="post-core" cx="143" cy="167" r="5"/><path d="M140 164l6 6" stroke="#eef0e5" stroke-width="2"/></g>
+<g class="head-wire" data-peg="4"><ellipse class="peg-handle" cx="112" cy="97" rx="11" ry="16" fill="url(#metal)" stroke="#b9c1b4" stroke-width="1.5"/><path d="M112 97H144" stroke="#b8beb5" stroke-width="7"/><path class="wire" d="M195 356 L195 337 L144 97" stroke-width="2.2"/><circle class="post-ring" cx="144" cy="97" r="11"/><circle class="post-core" cx="144" cy="97" r="5"/><path d="M141 94l6 6" stroke="#eef0e5" stroke-width="2"/></g>
+<g class="head-wire" data-peg="3"><ellipse class="peg-handle" cx="288" cy="97" rx="11" ry="16" fill="url(#metal)" stroke="#b9c1b4" stroke-width="1.5"/><path d="M288 97H256" stroke="#b8beb5" stroke-width="7"/><path class="wire" d="M204 356 L204 337 L256 97" stroke-width="1.6"/><circle class="post-ring" cx="256" cy="97" r="11"/><circle class="post-core" cx="256" cy="97" r="5"/><path d="M253 94l6 6" stroke="#eef0e5" stroke-width="2"/></g>
+<g class="head-wire" data-peg="2"><ellipse class="peg-handle" cx="288" cy="167" rx="11" ry="16" fill="url(#metal)" stroke="#b9c1b4" stroke-width="1.5"/><path d="M288 167H257" stroke="#b8beb5" stroke-width="7"/><path class="wire" d="M213 356 L213 337 L257 167" stroke-width="1.2"/><circle class="post-ring" cx="257" cy="167" r="11"/><circle class="post-core" cx="257" cy="167" r="5"/><path d="M254 164l6 6" stroke="#eef0e5" stroke-width="2"/></g>
+<g class="head-wire" data-peg="1"><ellipse class="peg-handle" cx="288" cy="237" rx="11" ry="16" fill="url(#metal)" stroke="#b9c1b4" stroke-width="1.5"/><path d="M288 237H253" stroke="#b8beb5" stroke-width="7"/><path class="wire" d="M222 356 L222 337 L253 237" stroke-width="0.9"/><circle class="post-ring" cx="253" cy="237" r="11"/><circle class="post-core" cx="253" cy="237" r="5"/><path d="M250 234l6 6" stroke="#eef0e5" stroke-width="2"/></g>
+</svg><button type="button" class="string left bottom" data-string="6" aria-pressed="true" aria-label="6번 줄 E2 미"><strong>E</strong><span>6번 줄<br>미</span></button>
+<button type="button" class="string left middle" data-string="5" aria-pressed="false" aria-label="5번 줄 A2 라"><strong>A</strong><span>5번 줄<br>라</span></button>
+<button type="button" class="string left top" data-string="4" aria-pressed="false" aria-label="4번 줄 D3 레"><strong>D</strong><span>4번 줄<br>레</span></button>
+<button type="button" class="string right top" data-string="3" aria-pressed="false" aria-label="3번 줄 G3 솔"><strong>G</strong><span>3번 줄<br>솔</span></button>
+<button type="button" class="string right middle" data-string="2" aria-pressed="false" aria-label="2번 줄 B3 시"><strong>B</strong><span>2번 줄<br>시</span></button>
+<button type="button" class="string right bottom" data-string="1" aria-pressed="false" aria-label="1번 줄 E4 미"><strong>E</strong><span>1번 줄<br>미</span></button>
+</div>
+<p class="headstock-caption">3 + 3 줄감개 배열 · 기타 앞면을 바라본 예시</p>
+<p id="selectedInstruction" class="selected-instruction">6번 줄: 가장 굵은 줄입니다. 그림에서는 왼쪽 아래 줄감개가 연결됩니다.</p>
+<ol class="steps"><li><b>1</b><span>맞출 줄을 선택하고 프렛을 누르지 않은 채 한 번 튕겨주세요.</span></li><li><b>2</b><span>왼쪽이면 조금 조이고, 오른쪽이면 조금 풀어주세요.</span></li></ol>
+<details class="help"><summary>내 기타와 줄감개 위치가 다르다면?</summary><ul class="guide"><li>이 그림은 일반적인 3 + 3 배열의 예시입니다. 한쪽에 6개가 있거나 다른 배열이라면 실제 줄을 따라 연결된 줄감개를 찾으세요.</li><li>보통 오른손잡이 연주 자세에서 얼굴 쪽 가장 굵은 줄은 6번 E, 가장 가는 줄은 1번 E입니다.</li><li>조이는 회전 방향은 기타마다 다릅니다. 조금씩 돌려 음정 변화를 확인하고, 지나치게 팽팽해지면 멈추세요.</li></ul></details></section></div>
+<div class="footer"><p class="creator">Soundkey v1.2 · 제작자 <strong>참리더</strong><br><a href="./index.html">기존 반음계 조율기 열기</a></p><p class="privacy">마이크 소리는 기기 안에서만 분석합니다. 녹음하거나 서버로 전송하지 않습니다.</p><footer id="frameHelp" hidden>마이크가 켜지지 않나요? <a id="standalone" target="_blank" rel="noopener">새 창에서 조율기 열기</a></footer><details class="mic-help"><summary>마이크가 켜지지 않을 때</summary><p>Safari 또는 Chrome에서 HTTPS 주소로 열고 사이트 설정의 마이크 권한을 허용하세요. 티스토리나 앱 안의 브라우저에서 차단되면 새 창에서 열어주세요.</p></details></div>
+</main><script>
+'use strict';
+const $=id=>document.getElementById(id);
+let context,stream,analyser,frame,running=false,starting=false,lastSignal=0,history=[],attempt=0,lastHz=null;
+const guitarStrings=[{"number": 6, "note": "E2", "korean": "미", "hz": 82.406889}, {"number": 5, "note": "A2", "korean": "라", "hz": 110}, {"number": 4, "note": "D3", "korean": "레", "hz": 146.832384}, {"number": 3, "note": "G3", "korean": "솔", "hz": 195.997718}, {"number": 2, "note": "B3", "korean": "시", "hz": 246.941651}, {"number": 1, "note": "E4", "korean": "미", "hz": 329.627557}];
+let selected=guitarStrings[0];
+const names=['C','C♯','D','D♯','E','F','F♯','G','G♯','A','A♯','B'];
+function detectPitch(samples,rate){
+ let mean=0;for(const x of samples)mean+=x;mean/=samples.length;
+ let energy=0;for(let i=0;i<samples.length;i++){samples[i]-=mean;energy+=samples[i]*samples[i];}
+ if(Math.sqrt(energy/samples.length)<.008)return null;
+ // YIN difference function: the first strong periodic minimum avoids octave errors.
+ const min=Math.floor(rate/1600),max=Math.min(Math.floor(rate/55),Math.floor(samples.length/2)-1),size=samples.length-max;
+ const diff=new Float32Array(max+2);let sum=0;
+ for(let lag=1;lag<=max+1;lag++){
+  let d=0;for(let i=0;i<size;i++){const delta=samples[i]-samples[i+lag];d+=delta*delta;}
+  sum+=d;diff[lag]=sum?d*lag/sum:1;
+ }
+ for(let lag=min;lag<max;lag++){
+  if(diff[lag]<.15){
+   while(lag+1<=max&&diff[lag+1]<diff[lag])lag++;
+   const a=diff[lag-1],b=diff[lag],c=diff[lag+1],den=a-2*b+c;
+   const offset=den?(a-c)/(2*den):0;
+   return rate/(lag+Math.max(-1,Math.min(1,offset)));
+  }
+ }
+ return null;
+}
+function clearReading(){history=[];$('note').textContent='—';$('frequency').textContent='기준음 A4 = 440 Hz';$('needle').style.left='50%';$('needle').style.background='#f6ca83';$('cents').textContent='선택한 줄만 연주해 주세요';lastHz=null;$('fanNeedle').style.transform='rotate(0deg)';$('fanNeedle').style.opacity='0';updateSegments(-1);}
+function render(hz){
+ lastHz=hz;
+ const midi=69+12*Math.log2(hz/440),nearest=Math.round(midi),cents=1200*Math.log2(hz/selected.hz);
+ $('note').replaceChildren(document.createTextNode(names[((nearest%12)+12)%12]));const sub=document.createElement('sub');sub.textContent=Math.floor(nearest/12)-1;$('note').append(sub);
+ const limited=Math.max(-50,Math.min(50,cents)),good=Math.abs(cents)<=5,far=Math.abs(cents)>300;
+ $('frequency').textContent='현재 '+hz.toFixed(1)+' Hz · 목표 '+selected.hz.toFixed(2)+' Hz';
+ $('needle').style.left=(50+limited)+'%';$('needle').style.background=good?'#8ce4cd':'#f6ca83';
+ $('fanNeedle').style.transform='rotate('+(limited*1.6)+'deg)';$('fanNeedle').style.transformOrigin='160px 168px';$('fanNeedle').style.opacity='1';$('fanNeedle').style.fill=good?'#568640':'#af7837';updateSegments(Math.round((limited+50)/100*12),good);
+ const message=far?'목표음과 차이가 큽니다 · 선택한 '+selected.number+'번 줄이 맞는지 먼저 확인하세요':good?selected.number+'번 줄 · 음정이 맞아요':selected.number+'번 줄 · '+(cents<0?'음이 낮아요 → 줄을 조금 조이세요':'음이 높아요 → 줄을 조금 푸세요');
+ if($('status').textContent!==message)$('status').textContent=message;
+ $('status').className='status'+(good?' good':'');$('cents').textContent=(cents>0?'+':'')+Math.round(cents)+' 센트'+(Math.abs(cents)>50?' · 표시 범위 밖':'');
+}
+function updateSegments(active,good=false){
+ document.querySelectorAll('[data-segment]').forEach(segment=>segment.setAttribute('class',Number(segment.dataset.segment)===active?'fan-segment active'+(good?' tuned':''):'fan-segment'));
+}
+function selectString(number){
+ selected=guitarStrings.find(s=>s.number===number);history=[];
+ document.querySelectorAll('[data-string]').forEach(button=>button.setAttribute('aria-pressed',String(Number(button.dataset.string)===number)));
+ $('target').textContent=number+'번 줄 · '+selected.note+' ('+selected.korean+') · 목표 '+selected.hz.toFixed(2)+' Hz';
+ const pegPosition={6:'왼쪽 아래',5:'왼쪽 가운데',4:'왼쪽 위',3:'오른쪽 위',2:'오른쪽 가운데',1:'오른쪽 아래'};
+ document.querySelectorAll('[data-peg]').forEach(peg=>peg.setAttribute('class',Number(peg.dataset.peg)===number?'head-wire selected':'head-wire'));
+ const description=number===6?'가장 굵은 줄입니다.':number===1?'가장 가는 줄입니다.':'굵은 줄부터 세어 '+(7-number)+'번째 줄입니다.';
+ $('selectedInstruction').textContent=number+'번 줄: '+description+' 그림에서는 '+pegPosition[number]+' 줄감개가 연결됩니다.';
+ if(lastHz)render(lastHz);else {$('status').className='status';$('status').textContent=number+'번 줄을 선택했습니다 · '+(running?'이 줄만 튕겨주세요':'마이크를 켜고 이 줄만 튕겨주세요');}
+}
+document.querySelectorAll('[data-string]').forEach(button=>button.addEventListener('click',()=>selectString(Number(button.dataset.string))));
+document.querySelectorAll('button[data-view]').forEach(button=>button.addEventListener('click',()=>{
+ document.body.dataset.view=button.dataset.view;
+ document.querySelectorAll('button[data-view]').forEach(item=>item.setAttribute('aria-pressed',String(item===button)));
+}));
+
+function listen(){
+ if(!running)return;
+ const samples=new Float32Array(analyser.fftSize);analyser.getFloatTimeDomainData(samples);
+ const hz=detectPitch(samples,context.sampleRate),now=performance.now();
+ if(hz){lastSignal=now;if(history.length&&Math.abs(12*Math.log2(hz/history[history.length-1]))>.7)history=[];history.push(hz);if(history.length>5)history.shift();const sorted=[...history].sort((a,b)=>a-b);render(sorted[Math.floor(sorted.length/2)]);}
+ else if(now-lastSignal>650){clearReading();$('status').textContent='소리를 기다리고 있어요';$('status').className='status';}
+ frame=setTimeout(listen,70);
+}
+function stop(message='마이크를 껐습니다'){
+ attempt++;starting=false;running=false;clearTimeout(frame);
+ if(stream)stream.getTracks().forEach(t=>t.stop());stream=null;
+ if(context){context.close().catch(()=>{});context=null;}analyser=null;clearReading();
+ $('toggle').disabled=false;$('toggle').textContent='마이크 켜기';$('status').textContent=message;$('status').className='status';
+}
+function withTimeout(promise,ms){
+ let timer;return Promise.race([promise,new Promise((_,reject)=>{timer=setTimeout(()=>reject(Object.assign(new Error(),{name:'PermissionTimeout'})),ms);})]).finally(()=>clearTimeout(timer));
+}
+async function start(){
+ if(starting)return;starting=true;const id=++attempt;
+ $('toggle').textContent='요청 취소';$('status').className='status';
+ $('status').textContent='브라우저의 마이크 권한 창에서 허용을 눌러주세요';
+ try{
+  if(location.protocol==='file:')throw Object.assign(new Error(),{name:'FileContext'});
+  if(!window.isSecureContext)throw Object.assign(new Error(),{name:'InsecureContext'});
+  const policy=document.permissionsPolicy||document.featurePolicy;
+  if(policy?.allowsFeature&&!policy.allowsFeature('microphone'))throw Object.assign(new Error(),{name:'EmbedBlocked'});
+  if(!navigator.mediaDevices?.getUserMedia)throw Object.assign(new Error(),{name:'Unsupported'});
+  const Audio=context=new (window.AudioContext||window.webkitAudioContext)();
+  // Start both operations in the tap handler. Do not let a suspended AudioContext
+  // prevent the browser from ever showing the microphone permission prompt.
+  const resumed=Audio.resume();
+  const requested=navigator.mediaDevices.getUserMedia({audio:{echoCancellation:false,noiseSuppression:false,autoGainControl:false},video:false}).then(captured=>{
+   if(id!==attempt){captured.getTracks().forEach(t=>t.stop());return null;}
+   stream=captured;return captured;
+  });
+  const [captured]=await withTimeout(Promise.all([requested,resumed]),30000);
+  if(id!==attempt||!captured)return;
+  if(document.hidden){stop('화면으로 돌아온 뒤 마이크를 다시 켜주세요');return;}
+  analyser=Audio.createAnalyser();analyser.fftSize=4096;
+  const source=Audio.createMediaStreamSource(captured);source.connect(analyser);
+  const silent=Audio.createGain();silent.gain.value=0;analyser.connect(silent);silent.connect(Audio.destination);
+  captured.getAudioTracks().forEach(track=>track.addEventListener('ended',()=>{if(running&&id===attempt)stop('마이크 연결이 종료되었습니다');}));
+  running=true;starting=false;history=[];lastSignal=performance.now();$('toggle').textContent='마이크 끄기';$('status').textContent='소리를 기다리고 있어요';listen();
+ }catch(error){
+  if(id!==attempt)return;
+  stop();const messages={NotAllowedError:'마이크 권한이 차단되었습니다. 브라우저 사이트 설정에서 허용한 뒤 다시 눌러주세요.',SecurityError:'마이크가 차단되었습니다. 새 창에서 열어 권한을 허용해 주세요.',EmbedBlocked:'이 페이지 안에서는 마이크가 차단되어 있습니다. 아래 새 창 링크를 눌러주세요.',FileContext:'다운로드한 파일 대신 아래 HTTPS 조율기 링크로 접속해 주세요.',NotFoundError:'사용 가능한 마이크를 찾지 못했습니다.',NotReadableError:'마이크를 사용할 수 없습니다. 다른 앱에서 사용 중인지 확인하세요.',InsecureContext:'마이크를 사용하려면 HTTPS 주소로 접속해 주세요.',Unsupported:'이 브라우저는 마이크를 지원하지 않습니다. 최신 Safari 또는 Chrome을 사용하세요.',PermissionTimeout:'마이크 요청이 완료되지 않았습니다. 권한 창을 확인하거나 Safari·Chrome에서 다시 열어주세요.'};
+  $('status').textContent=messages[error.name]||'마이크를 시작하지 못했습니다. Safari 또는 Chrome에서 다시 시도해 주세요.';$('status').className='status error';
+  $('frameHelp').hidden=false;
+ }
+}
+$('toggle').addEventListener('click',()=>running?stop():starting?stop('마이크 요청을 취소했습니다'):start());
+document.addEventListener('visibilitychange',()=>{if(document.hidden&&running)stop('화면을 떠나 마이크를 껐습니다');});window.addEventListener('pagehide',()=>stop());
+$('standalone').href=location.protocol==='file:'?'https://charmleader.github.io/soundkey/v1.2.html':window.location.href;
+if(window.self!==window.top||location.protocol==='file:')$('frameHelp').hidden=false;
+</script></body></html>

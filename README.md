@@ -1,5 +1,23 @@
 # Soundkey v1.2 · 제작자 참리더
 
+## 버전별 HTML 주소
+
+- 기존 반음계 조율기: https://charmleader.github.io/soundkey/
+- 새 디자인 v1.2: https://charmleader.github.io/soundkey/v1.2.html
+- 기존에 안내한 기타 링크 `guitar.html`도 계속 유지합니다.
+
+`v1.2.html`은 새 디자인과 마이크 기능을 포함한 독립 HTML 파일입니다. 변경할 때 `guitar.html`과 `v1.2.html`에 함께 반영합니다. 휴대폰에서는 다운로드 파일을 직접 여는 대신 HTTPS 게시 주소로 접속하세요.
+
+### 티스토리 반영 순서
+
+1. 티스토리 글 수정 → HTML 모드로 이동합니다.
+2. 기존 iframe의 `src`를 `https://charmleader.github.io/soundkey/v1.2.html`로 바꿉니다.
+3. 새 창 링크의 `href`도 같은 주소로 바꿉니다. `allow="microphone"`은 유지하세요.
+4. 저장/발행 후 글을 새로 열어 확인하세요. 변경 전 화면이 남아 있으면 iframe과 링크 주소 뒤에 `?v=1.2`를 붙여 다시 저장합니다.
+5. 마이크가 삽입 화면에서 차단되면 새 창 링크로 접속합니다.
+
+서버에는 `main` 브랜치에 파일을 업로드하면 됩니다. GitHub Pages가 `main / (root)`로 설정되어 있으면 이후 업로드된 HTML이 자동 배포됩니다. 저장소의 Actions에서 Pages 배포 성공 여부를 확인할 수 있습니다. GitHub 저장소의 파일 화면은 실행 화면이 아닙니다.
+
 ## 기타 조율기 추가 버전
 
 `guitar.html`은 부채꼴/직선 표시를 선택할 수 있는 기타 조율기입니다. `index.html`의 기존 반음계 조율기도 유지합니다. 두 페이지 모두 제작자 **참리더**를 표시합니다.
@@ -12,17 +30,17 @@
 - 기타마다 줄감개의 위치와 조이는 회전 방향이 다르므로 시계/반시계 방향을 고정해 안내하지 않습니다. 조금씩 조절하고 과도하게 팽팽해지면 멈추세요.
 - 굵은 6번 E2와 가는 1번 E4는 다른 목표음입니다. 가장 가까운 반음에 맞추는 기존 조율기와 달리 선택한 줄을 기준으로 비교합니다.
 
-게시 후 기타 버전 주소: https://charmleader.github.io/soundkey/guitar.html
+게시 후 기타 버전 주소: https://charmleader.github.io/soundkey/v1.2.html
 
 ### 티스토리 v1.2 삽입
 
 티스토리 글의 HTML 모드에 `tistory-embed.html` 내용을 붙여넣으세요. 부모 페이지가 마이크를 차단하면 새 창 링크로 열어야 합니다. 삽입 높이는 블로그 스킨에 맞춰 조정할 수 있고, 내용이 길면 iframe 안에서 스크롤됩니다.
 
 ```html
-<iframe src="https://charmleader.github.io/soundkey/guitar.html"
+<iframe src="https://charmleader.github.io/soundkey/v1.2.html"
   title="참리더 기타 조율기 v1.2" allow="microphone"
   style="display:block;width:100%;height:1500px;border:0;border-radius:20px;"></iframe>
-<p style="text-align:center;"><a href="https://charmleader.github.io/soundkey/guitar.html"
+<p style="text-align:center;"><a href="https://charmleader.github.io/soundkey/v1.2.html"
   target="_blank" rel="noopener">🎸 참리더 기타 조율기 v1.2 새 창에서 열기</a></p>
 ```
 

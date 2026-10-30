@@ -22,6 +22,7 @@ function loadTuner() {
   const context = vm.createContext({
     window, location: { protocol: 'https:' },
     document: {
+      body: {dataset:{}},
       getElementById: element, querySelectorAll: selector => selector === '[data-segment]' ? segments : selector === '[data-peg]' ? pegs : [], addEventListener() {},
       createTextNode: text => ({ textContent: text }), createElement: () => ({}),
     },
@@ -82,4 +83,29 @@ test('segmented fan and headstock show the selected string and pitch direction',
   assert.equal(segments[12].attributes.class,'fan-segment active');
   run('clearReading()');
   assert.ok(segments.every(s=>s.attributes.class==='fan-segment'));
+});
+
+test('general mode automatically tunes non-guitar notes without string selection', () => {
+  const {run,element,segments}=loadTuner();
+  for (const [hz,label] of [[261.625565,'C4'],[369.994423,'F♯4'],[466.163762,'A♯4']]) {
+    run(`render(${hz})`);
+    assert.match(element('target').textContent,new RegExp(label));
+    assert.match(element('status').textContent,/음정이 맞아요/);
+    assert.equal(segments[6].attributes.class,'fan-segment active tuned');
+    run(`render(${hz * 2 ** (-20/1200)})`);
+    assert.match(element('status').textContent,/높여주세요/);
+    run(`render(${hz * 2 ** (20/1200)})`);
+    assert.match(element('status').textContent,/낮춰주세요/);
+    assert.doesNotMatch(element('status').textContent,/조이세요|푸세요|번 줄/);
+  }
+});
+test('mode changes clear old readings and restore guitar target', () => {
+  const {run,element}=loadTuner();
+  run('selectString(1);render(329.627557);setMode("general");render(440)');
+  assert.match(element('status').textContent,/음정이 맞아요/);
+  run('setMode("guitar")');
+  assert.equal(run('lastHz'),null);
+  assert.match(element('target').textContent,/1번 줄/);
+  run('render(440)');
+  assert.doesNotMatch(element('status').textContent,/음정이 맞아요/);
 });

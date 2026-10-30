@@ -1,0 +1,110 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>소리 조율기 v1.2 · 참리더</title>
+<style>
+:root{font-family:system-ui,-apple-system,sans-serif;color:#edf5f3;background:#101e23;color-scheme:dark}*{box-sizing:border-box}body{margin:0;min-height:100svh;display:grid;place-items:center;padding:24px}main{width:min(100%,480px);text-align:center}header{margin-bottom:32px}h1{font-size:25px;margin:8px}p{color:#a8bdc0;line-height:1.7}small{color:#a8bdc0}.panel{background:#192b32;border:1px solid #30474f;border-radius:28px;padding:32px 24px}.note{font-size:100px;font-weight:650;line-height:1.3;min-height:130px;letter-spacing:-5px}.note sub{font-size:30px;letter-spacing:0}.frequency{font-variant-numeric:tabular-nums;color:#a8bdc0;min-height:28px}.scale{position:relative;height:72px;margin:24px 0 8px;background:repeating-linear-gradient(90deg,transparent 0,transparent calc(10% - 1px),#40565d calc(10% - 1px),#40565d 10%);background-size:100% 20px;background-repeat:no-repeat;background-position:center}.scale:before{content:'';position:absolute;left:calc(50% - 12px);width:24px;top:0;height:45px;background:#78dbc329;border-radius:6px}.needle{position:absolute;left:50%;top:0;width:3px;height:45px;background:#f6ca83;border-radius:5px;transform:translateX(-50%);transition:left .12s}.labels{display:flex;justify-content:space-between;color:#a8bdc0;font-size:13px;padding-top:50px}.status{min-height:30px;font-weight:600;margin:18px 0}.cents{color:#a8bdc0;min-height:24px;font-variant-numeric:tabular-nums}button{width:100%;border:0;border-radius:16px;padding:17px;margin-top:24px;background:#8ce4cd;color:#102c29;font:700 17px system-ui;cursor:pointer}button:disabled{opacity:.6;cursor:wait}button:focus-visible,a:focus-visible{outline:3px solid #fff;outline-offset:4px}.privacy{font-size:13px;margin:24px 8px 0}.good{color:#8ce4cd}.error{color:#ffb2ab}.badge{font-size:12px;color:#8ce4cd;letter-spacing:3px}.hint{font-size:14px;margin-bottom:0}footer{margin-top:24px;font-size:13px;color:#a8bdc0}a{color:#8ce4cd}
+</style>
+</head>
+<body><main>
+<header><span class="badge">SOUNDKEY</span><h1>소리 조율기</h1><small>버전 1.2 · 제작자 참리더</small><p>악기 소리를 들려주세요.<br>가장 가까운 음과 음정 차이를 알려드려요.</p></header>
+<p><a href="./v1.2.html" style="display:block;padding:14px;border:1px solid #8ce4cd;border-radius:14px;text-decoration:none">🎸 새 디자인 v1.2 · 기타 조율기 열기</a></p>
+<section class="panel" aria-label="조율기">
+<div id="note" class="note">—</div><div id="frequency" class="frequency">기준음 A4 = 440 Hz</div>
+<div class="scale" aria-hidden="true"><div id="needle" class="needle"></div><div class="labels"><span>−50</span><span>0</span><span>+50 센트</span></div></div>
+<div id="status" class="status" role="status" aria-live="polite">마이크를 켜고 시작하세요</div><div id="cents" class="cents">한 번에 한 음씩 연주해 주세요</div>
+<button id="toggle" type="button">마이크 켜기</button><p class="hint">왼쪽이면 낮은 음, 오른쪽이면 높은 음입니다.</p>
+</section><p class="privacy">마이크 소리는 이 기기에서만 분석합니다.<br>소리를 녹음하거나 서버로 전송하지 않습니다.</p><footer id="frameHelp" hidden>마이크가 켜지지 않나요? <a id="standalone" target="_blank" rel="noopener">새 창에서 조율기 열기</a></footer><details style="margin-top:20px;text-align:left;color:#a8bdc0;font-size:13px;line-height:1.8"><summary>마이크가 켜지지 않을 때</summary><p>Safari 또는 Chrome에서 HTTPS 주소로 열어주세요. 카카오톡·네이버 등 앱 안의 브라우저에서는 외부 브라우저로 여는 것이 좋습니다. 주소창의 사이트 설정에서 마이크 권한을 허용하세요. 티스토리 안에서 차단되면 조율기를 새 창으로 열어주세요.</p></details>
+<p style="font-size:13px;color:#a8bdc0">Soundkey v1.2 · 제작자 <strong>참리더</strong></p></main>
+<script>
+'use strict';
+const $=id=>document.getElementById(id);
+let context,stream,analyser,frame,running=false,starting=false,lastSignal=0,history=[],attempt=0;
+const names=['C','C♯','D','D♯','E','F','F♯','G','G♯','A','A♯','B'];
+function detectPitch(samples,rate){
+ let mean=0;for(const x of samples)mean+=x;mean/=samples.length;
+ let energy=0;for(let i=0;i<samples.length;i++){samples[i]-=mean;energy+=samples[i]*samples[i];}
+ if(Math.sqrt(energy/samples.length)<.008)return null;
+ // YIN difference function: the first strong periodic minimum avoids octave errors.
+ const min=Math.floor(rate/1600),max=Math.min(Math.floor(rate/55),Math.floor(samples.length/2)-1),size=samples.length-max;
+ const diff=new Float32Array(max+2);let sum=0;
+ for(let lag=1;lag<=max+1;lag++){
+  let d=0;for(let i=0;i<size;i++){const delta=samples[i]-samples[i+lag];d+=delta*delta;}
+  sum+=d;diff[lag]=sum?d*lag/sum:1;
+ }
+ for(let lag=min;lag<max;lag++){
+  if(diff[lag]<.15){
+   while(lag+1<=max&&diff[lag+1]<diff[lag])lag++;
+   const a=diff[lag-1],b=diff[lag],c=diff[lag+1],den=a-2*b+c;
+   const offset=den?(a-c)/(2*den):0;
+   return rate/(lag+Math.max(-1,Math.min(1,offset)));
+  }
+ }
+ return null;
+}
+function clearReading(){history=[];$('note').textContent='—';$('frequency').textContent='기준음 A4 = 440 Hz';$('needle').style.left='50%';$('needle').style.background='#f6ca83';$('cents').textContent='한 번에 한 음씩 연주해 주세요';}
+function render(hz){
+ const midi=69+12*Math.log2(hz/440),nearest=Math.round(midi),cents=100*(midi-nearest);
+ $('note').replaceChildren(document.createTextNode(names[((nearest%12)+12)%12]));const sub=document.createElement('sub');sub.textContent=Math.floor(nearest/12)-1;$('note').append(sub);
+ $('frequency').textContent=hz.toFixed(1)+' Hz';$('needle').style.left=(50+cents)+'%';
+ const good=Math.abs(cents)<=5;$('needle').style.background=good?'#8ce4cd':'#f6ca83';
+ const message=good?'음정이 맞아요':cents<0?'음이 낮아요 · 조금 높여주세요':'음이 높아요 · 조금 낮춰주세요';
+ if($('status').textContent!==message)$('status').textContent=message;
+ $('status').className='status'+(good?' good':'');$('cents').textContent=(cents>0?'+':'')+Math.round(cents)+' 센트';
+}
+function listen(){
+ if(!running)return;
+ const samples=new Float32Array(analyser.fftSize);analyser.getFloatTimeDomainData(samples);
+ const hz=detectPitch(samples,context.sampleRate),now=performance.now();
+ if(hz){lastSignal=now;if(history.length&&Math.abs(12*Math.log2(hz/history[history.length-1]))>.7)history=[];history.push(hz);if(history.length>5)history.shift();const sorted=[...history].sort((a,b)=>a-b);render(sorted[Math.floor(sorted.length/2)]);}
+ else if(now-lastSignal>650){clearReading();$('status').textContent='소리를 기다리고 있어요';$('status').className='status';}
+ frame=setTimeout(listen,70);
+}
+function stop(message='마이크를 껐습니다'){
+ attempt++;starting=false;running=false;clearTimeout(frame);
+ if(stream)stream.getTracks().forEach(t=>t.stop());stream=null;
+ if(context){context.close().catch(()=>{});context=null;}analyser=null;clearReading();
+ $('toggle').disabled=false;$('toggle').textContent='마이크 켜기';$('status').textContent=message;$('status').className='status';
+}
+function withTimeout(promise,ms){
+ let timer;return Promise.race([promise,new Promise((_,reject)=>{timer=setTimeout(()=>reject(Object.assign(new Error(),{name:'PermissionTimeout'})),ms);})]).finally(()=>clearTimeout(timer));
+}
+async function start(){
+ if(starting)return;starting=true;const id=++attempt;
+ $('toggle').textContent='요청 취소';$('status').className='status';
+ $('status').textContent='브라우저의 마이크 권한 창에서 허용을 눌러주세요';
+ try{
+  if(location.protocol==='file:')throw Object.assign(new Error(),{name:'FileContext'});
+  if(!window.isSecureContext)throw Object.assign(new Error(),{name:'InsecureContext'});
+  const policy=document.permissionsPolicy||document.featurePolicy;
+  if(policy?.allowsFeature&&!policy.allowsFeature('microphone'))throw Object.assign(new Error(),{name:'EmbedBlocked'});
+  if(!navigator.mediaDevices?.getUserMedia)throw Object.assign(new Error(),{name:'Unsupported'});
+  const Audio=context=new (window.AudioContext||window.webkitAudioContext)();
+  // Start both operations in the tap handler. Do not let a suspended AudioContext
+  // prevent the browser from ever showing the microphone permission prompt.
+  const resumed=Audio.resume();
+  const requested=navigator.mediaDevices.getUserMedia({audio:{echoCancellation:false,noiseSuppression:false,autoGainControl:false},video:false}).then(captured=>{
+   if(id!==attempt){captured.getTracks().forEach(t=>t.stop());return null;}
+   stream=captured;return captured;
+  });
+  const [captured]=await withTimeout(Promise.all([requested,resumed]),30000);
+  if(id!==attempt||!captured)return;
+  if(document.hidden){stop('화면으로 돌아온 뒤 마이크를 다시 켜주세요');return;}
+  analyser=Audio.createAnalyser();analyser.fftSize=4096;
+  const source=Audio.createMediaStreamSource(captured);source.connect(analyser);
+  const silent=Audio.createGain();silent.gain.value=0;analyser.connect(silent);silent.connect(Audio.destination);
+  captured.getAudioTracks().forEach(track=>track.addEventListener('ended',()=>{if(running&&id===attempt)stop('마이크 연결이 종료되었습니다');}));
+  running=true;starting=false;history=[];lastSignal=performance.now();$('toggle').textContent='마이크 끄기';$('status').textContent='소리를 기다리고 있어요';listen();
+ }catch(error){
+  if(id!==attempt)return;
+  stop();const messages={NotAllowedError:'마이크 권한이 차단되었습니다. 브라우저 사이트 설정에서 허용한 뒤 다시 눌러주세요.',SecurityError:'마이크가 차단되었습니다. 새 창에서 열어 권한을 허용해 주세요.',EmbedBlocked:'이 페이지 안에서는 마이크가 차단되어 있습니다. 아래 새 창 링크를 눌러주세요.',FileContext:'다운로드한 파일 대신 아래 HTTPS 조율기 링크로 접속해 주세요.',NotFoundError:'사용 가능한 마이크를 찾지 못했습니다.',NotReadableError:'마이크를 사용할 수 없습니다. 다른 앱에서 사용 중인지 확인하세요.',InsecureContext:'마이크를 사용하려면 HTTPS 주소로 접속해 주세요.',Unsupported:'이 브라우저는 마이크를 지원하지 않습니다. 최신 Safari 또는 Chrome을 사용하세요.',PermissionTimeout:'마이크 요청이 완료되지 않았습니다. 권한 창을 확인하거나 Safari·Chrome에서 다시 열어주세요.'};
+  $('status').textContent=messages[error.name]||'마이크를 시작하지 못했습니다. Safari 또는 Chrome에서 다시 시도해 주세요.';$('status').className='status error';
+  $('frameHelp').hidden=false;
+ }
+}
+$('toggle').addEventListener('click',()=>running?stop():starting?stop('마이크 요청을 취소했습니다'):start());
+document.addEventListener('visibilitychange',()=>{if(document.hidden&&running)stop('화면을 떠나 마이크를 껐습니다');});window.addEventListener('pagehide',()=>stop());
+$('standalone').href=location.protocol==='file:'?'https://charmleader.github.io/soundkey/legacy.html':window.location.href;
+if(window.self!==window.top||location.protocol==='file:')$('frameHelp').hidden=false;
+</script></body></html>
